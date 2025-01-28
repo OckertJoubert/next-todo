@@ -15,6 +15,7 @@ import {
   ModalCloseButton,
   ModalBody,
   ModalFooter,
+  Grid,
 } from "@chakra-ui/react";
 import router from "next/router";
 import { useEffect, useState } from "react";
@@ -80,7 +81,12 @@ const Todo = () => {
 
   return (
     <>
-      <HStack spacing={20}>
+      <Grid
+        h="200px"
+        templateRows="repeat(2, 1fr)"
+        templateColumns="repeat(5, 1fr)"
+        gap={4}
+      >
         <Box
           style={{
             width: "30vw",
@@ -94,7 +100,7 @@ const Todo = () => {
         >
           <VStack spacing={4} align="stretch" m={6}>
             <Center>
-              <Heading fontFamily="cursive">To Do</Heading>
+              <Heading>To Do</Heading>
             </Center>
             <Input placeholder="Search" />
 
@@ -157,7 +163,7 @@ const Todo = () => {
             {selectedItems && <TodoListItems item={selectedItems} />}
           </VStack>
         </Box>
-      </HStack>
+      </Grid>
     </>
   );
 };

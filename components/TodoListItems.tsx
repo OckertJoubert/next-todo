@@ -31,8 +31,7 @@ const TodoListItems = ({ item }) => {
   const [filteredItems, setFilteredItems] = useState([]);
 
   useEffect(() => {
-    if (item && item?.items && item.items.length > 0) {
-      console.log("ITEMSSSS", item);
+    if (item && item.items) {
       const validItems = item.items.filter(
         (task) => task.status === "active" || task.status === "completed"
       );
