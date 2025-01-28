@@ -1,0 +1,46 @@
+type List {
+  id: String!
+  status: String!
+  itemsCount: Int!
+  itemsCompleted: Int!
+  items: AWSJSON
+  name: String!
+  modified: String!
+  created: String!
+}
+
+type User {
+  id: ID
+  lName: String
+  fName: String
+  email: String
+  phone: String
+  modified: String
+  created: String
+}
+
+input createListInput {
+  name: String!
+}
+
+input updateItemsInput {
+  listId: String!
+  items: AWSJSON!
+  itemsCount: Int
+  itemsCompleted: Int
+}
+
+type Mutation {
+  createList(input: createListInput!): List
+  updateListItems(input: updateItemsInput!): List
+}
+
+type Query {
+  user: User
+  userList: [List]
+}
+
+schema {
+  query: Query
+  mutation: Mutation
+}
