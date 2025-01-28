@@ -16,9 +16,6 @@ function Index() {
     if (router.isReady && router.query?.path) {
       if (router.query.path.indexOf("?loop=true") == -1) router.push("/404");
     }
-    if (router) {
-      console.log("router: ", router);
-    }
   }, [router]);
   return (
     <Page>

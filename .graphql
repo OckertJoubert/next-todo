@@ -29,10 +29,14 @@ input updateItemsInput {
   itemsCount: Int
   itemsCompleted: Int
 }
-
+input deleteListInput {
+  listId: String!
+}
 type Mutation {
   createList(input: createListInput!): List
+  updateListName(name: String, status: String, id: ID!): List
   updateListItems(input: updateItemsInput!): List
+  deleteList(input: deleteListInput): List
 }
 
 type Query {

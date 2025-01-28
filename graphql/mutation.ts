@@ -29,3 +29,17 @@ export const UPDATE_LIST_ITEMS = gql`
     }
   }
 `;
+export const DELETE_LIST_ITEM = gql`
+  mutation deleteList($input: deleteListInput!) {
+    deleteList(input: $input) {
+      id
+      created
+      items
+      status
+      name
+      modified
+      itemsCount
+      itemsCompleted
+    }
+  }
+`;

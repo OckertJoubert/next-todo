@@ -41,19 +41,11 @@ const SignIn: FC = () => {
   const [tmpUser, setTmpUser]: [any, any] = useState({});
   const [formState, setFormState] = useState<FormStates>();
 
-  // Redirect to account page on sign-in
   useEffect(() => {
-    console.log({
-      isAuthenticated,
-      isLoading,
-      sessionStatus,
-      error,
-    });
     if (isLoading) {
       return;
     }
 
-    // Redirect after
     if (isAuthenticated) {
       router.push("/pages/");
       return;
@@ -137,17 +129,7 @@ const SignIn: FC = () => {
   }, [sessionStatus, tmpUser]);
 
   return (
-    <Page
-      seoOptions={{
-        title: "Sign in | donoteat",
-        description: "Sign in page for donoteat",
-        canonical: "https://donoteat/sign-in/",
-      }}
-      showNav={false}
-      maxW="100%"
-      p={0}
-      m={0}
-    >
+    <Page maxW="100%" p={0} m={0}>
       <>
         <NavBar />
 

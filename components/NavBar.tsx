@@ -35,7 +35,7 @@ export default function NavBar() {
   const bgColor = useColorModeValue("white", "gray.800");
   const textColor = useColorModeValue("gray.600", "white");
   const borderColor = useColorModeValue("gray.200", "gray.900");
-  console.log(user);
+
   return (
     <Container maxW={"8xl"}>
       <Flex
@@ -144,7 +144,7 @@ const DesktopNav = () => {
   const linkHoverColor = useColorModeValue("gray.800", "white");
   const popoverContentBgColor = useColorModeValue("white", "gray.800");
   const stage = process.env.NEXT_PUBLIC_STAGE;
-  console.log;
+
   return (
     <Stack direction={"row"} spacing={4}>
       {NAV_ITEMS.map((navItem) => (

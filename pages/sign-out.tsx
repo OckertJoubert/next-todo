@@ -4,6 +4,8 @@ import Router from "next/router";
 import { Loading } from "../components/Loading";
 import { AuthStateContext, useAuthDispatch } from "../context/AuthContext";
 import { useApolloClient } from "@apollo/client";
+import { Box } from "@chakra-ui/react";
+
 // import { useOrganisationDispatch } from "../contexts/OrganisationContext";
 
 const SignOut: FC = () => {
@@ -30,7 +32,16 @@ const SignOut: FC = () => {
   }, [isAuthenticated, isLoading, signOut]);
 
   // eslint-disable-next-line react/jsx-no-useless-fragment
-  return <>{isLoading && <Loading text="Signing out" />}</>;
+  return (
+    <Box
+      display="flex"
+      alignItems="center"
+      justifyContent="center"
+      height="100vh"
+    >
+      {isLoading && <Loading text="Signing out" />}
+    </Box>
+  );
 };
 
 export default SignOut;

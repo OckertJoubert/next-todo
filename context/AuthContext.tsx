@@ -531,17 +531,16 @@ export function AuthProvider({ children }: AuthContextProps): any {
   const checkAuthStatus = useCallback(async () => {
     try {
       const currentUser = await getCurrentUser();
-      console.log({ currentUser });
+
       // Fetch User details
       if (currentUser) {
         //  TODO: ADD ERROR when user is not found
         const { data, error } = await getUser();
-        console.log("GETUSER", data, error);
+
         if (data?.user) {
           dispatch({ type: "signedIn", user: data?.user });
         }
         if (!data?.user && error && error.message) {
-          console.log("no user");
           dispatch({ type: "anonymousSession" });
         }
       }

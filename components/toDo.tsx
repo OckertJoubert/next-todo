@@ -51,11 +51,17 @@ const Todo = () => {
   const createUserListItem = useCreateUserListItem(refetch);
   const [selectedItems, setSelectedItems] = useState({});
 
-  console.log(data, loading, error);
   useEffect(() => {
-    if (data && data?.userList) {
+    // @ts-ignore
+    if (data && data?.userList && !selectedItems.id) {
+      const parsedItems = JSON.parse(data.userList[0].items);
+      setSelectedItems({ ...data.userList[0], items: parsedItems });
     }
-  }, [data, loading, error]);
+    if (refetch && !loading && data) {
+      const parsedItems = JSON.parse(data.userList[0].items);
+      setSelectedItems({ ...data.userList[0], items: parsedItems });
+    }
+  }, [data, loading, refetch]);
 
   const { isAuthenticated, isLoading } = useAuthState();
   useEffect(() => {
@@ -78,7 +84,10 @@ const Todo = () => {
 
     setSelectedItems({ ...item, items: parsedItems });
   };
-
+  // Refetch the list after a list is deleted
+  const handleListDeleted = () => {
+    refetch();
+  };
   return (
     <>
       <Grid
@@ -160,7 +169,12 @@ const Todo = () => {
           borderRadius="md"
         >
           <VStack spacing={4} align="stretch">
-            {selectedItems && <TodoListItems item={selectedItems} />}
+            {selectedItems && (
+              <TodoListItems
+                item={selectedItems}
+                onListDeleted={handleListDeleted}
+              />
+            )}
           </VStack>
         </Box>
       </Grid>

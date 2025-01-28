@@ -19,16 +19,19 @@ import {
   ModalFooter,
   Input,
 } from "@chakra-ui/react";
-import { useMutation } from "@apollo/client";
+import { useMutation, useQuery } from "@apollo/client";
 import { AddIcon, DeleteIcon, EditIcon } from "@chakra-ui/icons";
-import { UPDATE_LIST_ITEMS } from "../graphql/mutation";
+import { DELETE_LIST_ITEM, UPDATE_LIST_ITEMS } from "../graphql/mutation";
 import { useState, useEffect } from "react";
+import { GET_USER_LIST } from "../graphql/queries";
 
-const TodoListItems = ({ item }) => {
+const TodoListItems = ({ item, onListDeleted }) => {
   const [updateListItems] = useMutation(UPDATE_LIST_ITEMS);
+  const [deleteList] = useMutation(DELETE_LIST_ITEM);
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [newTaskName, setNewTaskName] = useState("");
   const [filteredItems, setFilteredItems] = useState([]);
+  const { refetch } = useQuery(GET_USER_LIST);
 
   useEffect(() => {
     if (item && item.items) {
@@ -40,15 +43,6 @@ const TodoListItems = ({ item }) => {
   }, [item]);
 
   const handleUpdateListItems = async (listId, items) => {
-    console.log({
-      input: {
-        listId,
-        items: JSON.stringify(items),
-        itemsCount: items.length,
-        itemsCompleted: items.filter((task) => task.status === "completed")
-          .length,
-      },
-    });
     await updateListItems({
       variables: {
         input: {
@@ -94,7 +88,19 @@ const TodoListItems = ({ item }) => {
     setFilteredItems(updatedItems);
     await handleUpdateListItems(item.id, updatedItems);
   };
-
+  const handleDeleteList = async () => {
+    console.log("INPUT", item.id);
+    await deleteList({
+      variables: {
+        input: {
+          listId: item.id,
+        },
+      },
+    }).then(() => {
+      onListDeleted();
+    });
+  };
+  console.log("item", item.id);
   return (
     <>
       <VStack spacing={4} align="stretch" m={6}>
@@ -104,12 +110,13 @@ const TodoListItems = ({ item }) => {
           </Center>
           <Spacer />
           <Box p="4">
-            <IconButton m={2} aria-label="DeleteItem" icon={<DeleteIcon />} />
             <IconButton
               m={2}
-              aria-label="Search database"
-              icon={<EditIcon />}
+              aria-label="DeleteItem"
+              icon={<DeleteIcon />}
+              onClick={handleDeleteList}
             />
+            <IconButton m={2} aria-label="EditName" icon={<EditIcon />} />
             <Button leftIcon={<AddIcon />} width="12vw" onClick={onOpen}>
               New Task
             </Button>
